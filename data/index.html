@@ -1,565 +1,302 @@
 <!DOCTYPE HTML>
 <html lang="de">
-	<head>
-	<meta charset="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-	
-	body{
-		background-color: #222222;
-		font-family: -apple-system, 
-			BlinkMacSystemFont, 
-			"Segoe UI", 
-			Roboto, 
-			Oxygen-Sans, 
-			Ubuntu, 
-			Cantarell, 
-			"Helvetica Neue", 
-			sans-serif;
-		color: white;
-		background: linear-gradient(90deg, #ffa9a9, #64a1e0, #ffa9a9, #64a1e0);
-		background-size: 400% 400%;
-		-webkit-animation: gradientBG 14s ease infinite forwards;
-		animation: gradientBG 14s ease infinite forwards;
-		font-weight: lighter;
-	}
-	/** Animated background: Code By Webdevtrick ( https://webdevtrick.com ) **/
-	@-webkit-keyframes gradientBG {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
-	
-	@keyframes gradientBG {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
-	
-	h1 {
-	  font-weight: lighter;
-	  letter-spacing: .125rem;
-	  text-transform: uppercase;
-	  color: white;
-	  text-align: center;
-	  font-size: x-large;
-	}
-	
-	.buttonClass {
-	  font-size:15px;
-	  font-family:Arial;
-	  width:70px;
-	  height:70px;
-	  color:#fff;
-	  font-weight:200;
-	  border-top-left-radius:14px;
-	  border-top-right-radius:14px;
-	  border-bottom-left-radius:14px;
-	  border-bottom-right-radius:14px;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  -moz-user-select: none;
-	  -webkit-user-select: none;
-	  -ms-user-select:none;
-	  user-select:none;
-	  -o-user-select:none;
-	}
+        body {
+            background-color: #ccc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            color: #222;
+            background-size: 400% 400%;
+            font-weight: lighter;
+        }
+        
+        h1 {
+            font-weight: lighter;
+            letter-spacing: .125rem;
+            text-transform: uppercase;
+            color: #222;
+            text-align: center;
+            font-size: x-large;
+        }
+        
+        .buttonClass {
+            font-size: 15px;
+            font-family: Arial;
+            width: 70px;
+            height: 70px;
+            color: #222;
+            font-weight: 200;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -o-user-select: none;
+        }
+        
+        .buttonClass:hover {
+            opacity: 0.7;
+        }
+        
+        .grid-container {
+            font-size: 15px;
+            font-family: Arial;
+            display: grid;
+            grid-column-gap: 5px;
+            grid-row-gap: 5px;
+            grid-template-columns: auto auto auto;
+            padding: 10px;
+        }
+        
+        .grid-item {
+            text-align: center;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .dot {
+            border-radius: 20%;
+            display: flex;
+            justify-content: center;
+            /* align horizontal */
+            align-items: center;
+            /* align vertical */
+        }
+        
+        .dot-mode {
+            display: flex;
+            justify-content: center;
+            /* align horizontal */
+            align-items: center;
+            /* align vertical */
+        }
+        
+        .active {
+            border: 2px solid lightgray;
+        }
+        
+        .mode-item {
+            background: rgba(59, 57, 57, 0.308);
+        }
+        
+        .mode-item:hover {
+            opacity: 0.7;
+        }
+        
+        .verticalline {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.356);
+            text-align: center;
+        }
+        
+        .main-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
+        }
+        
+        .toggle {
+            height: 32px;
+            width: 52px;
+            border-radius: 16px;
+            display: inline-block;
+            position: relative;
+            margin: 0;
+            border: 2px solid #727272ab;
+            background: linear-gradient(180deg, #aeaeaeab 0%, #737374ad 100%);
+            transition: all .2s ease;
+        }
+        
+        .toggle:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 1px 2px rgba(44, 44, 44, .2);
+            transition: all .2s cubic-bezier(.5, .1, .75, 1.35);
+        }
+        
+        .toggle:checked {
+            border-color: #474755ab;
+            background: linear-gradient(180deg, #636468ad 0%, #1f2027ab 100%);
+        }
+        
+        .toggle:checked::after {
+            transform: translatex(20px);
+        }
+        
+        label {
+            text-align: right;
+            clear: both;
+            float: left;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px;
+        }
+        
+        .headline {
+            text-align: center;
+            font-weight: 200;
+            font-size: larger;
+            margin-bottom: 5px;
+        }
+        
+        .control-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        
+        .setting-button {
+            position: absolute;
+            padding: 10px;
+        }
+        
+        .number-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px;
+        }
+        
+        .save-button {
+            height: 30px;
+            margin: 5px auto;
+            background-color: rgba(147, 147, 158, 0.4);
+        }
+    </style>
+    <title>WORDCLOCK</title>
+    <link rel="icon" type="image/svg" href="./icons/clock.svg">
+</head>
 
-	.buttonClass:hover {
-	  opacity: 0.7;
-	}
-	
-	.grid-container {
-	  font-size:15px;
-	  font-family:Arial;
-	  display: grid;
-	  grid-column-gap: 5px;
-	  grid-row-gap: 5px;
-	  grid-template-columns: auto auto auto;
-	  padding: 10px;
-	}
+<body oncontextmenu="return false">
+    <h1 id="headline">WORDCLOCK</h1>
+    <div class="main-container">
+        <div class="verticalline"> </div>
+        <div class="checkbox-container">
+            <label for="Nightmode" style="align-self: flex-start">Nightmode</label>
+            <input name="Nightmode" id="Nightmode" type="checkbox" class="toggle">
+        </div>
+        <div class="number-container">
+            <label for="brightness">Brightness:</label>
+            <input type="range" id="brightness" name="volume" min="10" max="255">
+        </div>
+        <div class="number-container">
+            <label for="nm_start" style="align-self: flex-start">Nightmode start time: </label>
+            <input type="time" id="nm_start" name="nm_start" min="00:00" max="23:59">
+        </div>
+        <div class="number-container">
+            <label for="nm_end" style="align-self: flex-start">Nightmode end time: </label>
+            <input type="time" id="nm_end" name="nm_end" min="00:00" max="23:59">
+        </div>
+        <div class="buttonClass save-button" onclick="saveSettings()">SAVE</div>
+    </div>
+    <div class="main-container" id="colorcontainer">
+        <div class="verticalline">
+        </div>
+        <div class="headline">
+            COLOR
+        </div>
+        <div class="control-container">
+            <div class="grid-container">
+                <div class="grid-item"><span class="dot"><a href="cmd?led=255-0-0" class="buttonClass" style="background:rgb(255,0,0);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=255-0-128" class="buttonClass" style="background:rgb(255,0,128);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=255-0-255" class="buttonClass" style="background:rgb(255,0,255);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=128-0-255" class="buttonClass" style="background:rgb(128,0,255);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=0-0-255" class="buttonClass" style="background:rgb(0,0,255);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=0-128-255" class="buttonClass" style="background:rgb(0,128,255);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=255-255-255" class="buttonClass" style="background:rgb(255,255,255);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=0-255-128" class="buttonClass" style="background:rgb(0,255,128);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=0-255-0" class="buttonClass" style="background:rgb(0,255,0);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=128-255-0" class="buttonClass" style="background:rgb(128,255,0);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=200-200-0" class="buttonClass" style="background:rgb(200,200,0);"></a></span></div>
+                <div class="grid-item"><span class="dot"><a href="cmd?led=255-128-0" class="buttonClass" style="background:rgb(255,128,0);"></a></span></div>
+            </div>
+        </div>
+    </div>
 
-	.grid-item {
-	  text-align: center;
-	  display: inline-block;
-	  text-align: center;
-	}
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        var url = "./data?key=mode";
+        var myVar = null;
 
-	.dot {
-		border-radius: 20%;
-		display: flex;
-		justify-content: center; /* align horizontal */
-		align-items: center; /* align vertical */
-	}
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                myVar = JSON.parse(this.responseText);
+                // set checkbox states
+                var ckb_nightmode = document.querySelector('input[id="Nightmode"]');
+                if (myVar.nightMode == "1") {
+                    console.log("nightMode == 1");
+                    ckb_nightmode.checked = true;
+                } else {
+                    console.log("nightMode == 0");
+                    ckb_nightmode.checked = false;
+                }
+                ckb_nightmode.addEventListener('change', () => {
+                    if (ckb_nightmode.checked) {
+                        sendCommand("./cmd?nightmode=1");
+                    } else {
+                        sendCommand("./cmd?nightmode=0");
+                    }
+                });
 
-	.dot-mode {
-		display: flex;
-		justify-content: center; /* align horizontal */
-		align-items: center; /* align vertical */
-	}
+                document.getElementById("nm_start").value = myVar.nightModeStart.replace("-", ":");
+                document.getElementById("nm_end").value = myVar.nightModeEnd.replace("-", ":");
+                document.getElementById("brightness").value = parseInt(myVar.brightness);
+                console.log(myVar);
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
 
-	.active{
-		border: 2px solid lightgray;
-	}
+        function sendCommand(command) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", command, true);
+            xmlhttp.send();
+            console.log(command);
+        }
 
-	.mode-item{
-		background: rgba(59, 57, 57, 0.308);
-	}
-
-	.mode-item:hover{
-		opacity: 0.7;
-	}
-
-	.verticalline{
-		border-bottom: 1px solid rgba(255, 255, 255, 0.356);
-    	text-align: center;
-    	color: white;
-	}
-
-	input[type="checkbox"]{
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-		-webkit-tap-highlight-color: transparent;
-		cursor: pointer;
-	}
-
-
-	.toggle{
-		height: 32px;
-		width: 52px;
-		border-radius: 16px;
-		display: inline-block;
-		position: relative;
-		margin: 0;
-		border: 2px solid #474755ab;
-		background: linear-gradient(180deg, #2d2f39ab 0%, #1f2027ab 100%);
-		transition: all .2s ease;
-	}
-
-	.toggle:after{
-		content: '';
-		position: absolute;
-		top: 2px;
-		left: 2px;
-		width: 24px;
-		height: 24px;
-		border-radius: 50%;
-		background: white;
-		box-shadow: 0 1px 2px rgba(44,44,44,.2);
-		transition: all .2s cubic-bezier(.5,.1,.75,1.35);
-	}
-
-	.toggle:checked{
-		border-color: lightgray;
-	}
-
-	.toggle:checked::after{
-		transform: translatex(20px);
-	}
-
-	label {
-		text-align: right;
-		clear: both;
-		float:left;
-		margin-right:15px;
-		vertical-align: middle;
-	}
-
-	.checkbox-container{
-		display:flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		margin: 10px;
-	}
-
-	.headline{
-		text-align: center;
-		font-weight: 200;
-		font-size: larger;
-		margin-bottom: 5px;
-	}
-
-	.hidden{
-		display: none;
-	}
-
-	.control-container{
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-	}
-
-	.wide-button-bottom{
-		width: 80%; 
-		height: 40px; 
-		margin: 10px; 
-		padding: 5px;
-		background-color: rgba(147, 147, 158, 0.4);
-	}
-
-	.arrow-button{
-		width: 70px; 
-		height: 70px;
-		background-color: rgba(147, 147, 158, 0.4);
-	}
-
-	.tetris-button-bottom{
-		width: 105px; 
-		height: 40px; 
-		margin: 5px;
-		background-color: rgba(147, 147, 158, 0.4);
-	}
-
-	img{
-		-moz-user-select: none;
-		-webkit-user-select: none;	
-		user-select: none;
-	}
-
-	.setting-button{
-		position: absolute;
-		padding: 10px;
-	}
-
-	.settings-container{
-		height: 0px;
-		transition: height 1s;
-		overflow: hidden;
-	}
-
-	.show{
-		height: 150px;
-		transition: height 1s;
-	}
-
-	.number-container{
-		display:flex;
-		flex-direction: row;
-		justify-content: left;
-		align-items: center;
-		margin: 10px;
-	}
-
-	.save-button{
-		height: 30px; 
-		margin: 5px; 
-		background-color: rgba(147, 147, 158, 0.4);
-	}
-  
-	</style>
-	<title>WORDCLOCK 2.0</title>
-	<link rel="icon" type="image/svg" href="./icons/clock.svg">
-	</head>
-
-	<body oncontextmenu="return false"> <!-- prevent opening of contextmenu --> 
-		<div class="setting-button" onclick="toggleSettings()"><img src = "./icons/settings.svg" style="height:20px"/></div>
-		
-		<h1 id="headline">WORDCLOCK 2.0</h1>
-		
-		<div id="settings-container" class="settings-container">
-			<div class="number-container">
-				<label for="brightness">Brightness:</label>
-				<input type="range" id="brightness" name="volume" min="10" max="255">
-			</div>
-			<div class="number-container">
-				<label for="nm_start" style="align-self: flex-start">Nightmode start time: </label> 
-				<input type="time" id="nm_start" name="nm_start" min="00:00" max="23:59">
-			</div>
-			<div class="number-container">
-				<label for="nm_end" style="align-self: flex-start">Nightmode end time: </label>
-				<input type="time" id="nm_end" name="nm_end" min="00:00" max="23:59">
-			</div>
-			<div class="buttonClass save-button" onclick="saveSettings()">SAVE</div>
-		</div>
-
-		<div class="verticalline">
-		</div>
-		<div class="headline">
-			MODE
-		</div>
-		<div class="grid-container">
-			<div class="grid-item mode-item"><span class="dot-mode" onclick="modechange(this, 0)"><a href="cmd?mode=clock" class="buttonClass" style="width: 100%;"><img src = "./icons/clock.svg" style="height:50px"/></a></span></div>
-			<div class="grid-item mode-item"><span class="dot-mode" onclick="modechange(this, 1)"><a href="cmd?mode=diclock" class="buttonClass" style="width: 100%;"><img src = "./icons/diclock.svg" style="height:50px"/></a></span></div>
-			<div class="grid-item mode-item"><span class="dot-mode" onclick="modechange(this, 2)"><a href="cmd?mode=spiral" class="buttonClass" style="width: 100%;"><img src = "./icons/spiral.svg" style="height:50px"/></a></span></div>
-			<div class="grid-item mode-item"><span class="dot-mode" onclick="modechange(this, 3)"><a href="cmd?mode=tetris" class="buttonClass" style="width: 100%;"><img src = "./icons/tetris.svg" style="height:50px"/></a></span></div>
-			<div class="grid-item mode-item"><span class="dot-mode" onclick="modechange(this, 4)"><a href="cmd?mode=snake" class="buttonClass" style="width: 100%;"><img src = "./icons/snake.svg" style="height:50px"/></a></span></div>
-			<div class="grid-item mode-item"><span class="dot-mode" onclick="modechange(this, 5)"><a href="cmd?mode=pingpong" class="buttonClass" style="width: 100%;"><img src = "./icons/pingpong.svg" style="height:50px"/></a></span></div>
-		</div>
-		<div class="checkbox-container">
-			<label for="Nightmode" style="align-self: flex-start">Nightmode</label> 
-			<div>
-				<input name= "Nightmode" id="Nightmode" type="checkbox" class="toggle">
-			</div>
-		</div>
-		<div class="checkbox-container">
-			<label for="AutoChange" style="align-self: flex-start">Automatic mode change</label>
-			<div>
-				<input name= "AutoChange" id="AutoChange" type="checkbox" class="toggle">
-			</div>
-			
-		</div>
-		
-		<div class="main-container hidden" id="colorcontainer">
-			<div class="verticalline">
-			</div>
-			<div class="headline">
-				COLOR
-			</div>
-			<div class="control-container">
-				<div class="grid-container">
-					<div class="grid-item"><span class="dot"><a href="cmd?led=255-0-0" class="buttonClass" style="background:rgb(255,0,0);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=255-0-128" class="buttonClass" style="background:rgb(255,0,128);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=255-0-255" class="buttonClass" style="background:rgb(255,0,255);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=128-0-255" class="buttonClass" style="background:rgb(128,0,255);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=0-0-255" class="buttonClass" style="background:rgb(0,0,255);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=0-128-255" class="buttonClass" style="background:rgb(0,128,255);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=255-255-255" class="buttonClass" style="background:rgb(255,255,255);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=0-255-128" class="buttonClass" style="background:rgb(0,255,128);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=0-255-0" class="buttonClass" style="background:rgb(0,255,0);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=128-255-0" class="buttonClass" style="background:rgb(128,255,0);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=200-200-0" class="buttonClass" style="background:rgb(200,200,0);"></a></span></div>
-					<div class="grid-item"><span class="dot"><a href="cmd?led=255-128-0" class="buttonClass" style="background:rgb(255,128,0);"></a></span></div>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="main-container hidden" id="snakecontainer">
-			<div class="verticalline">
-			</div>
-			<div class="headline">
-				SNAKE
-			</div>
-			<div class="control-container">
-				<div class="grid-container">
-					<div class="grid-item" style="grid-column: 2; grid-row: 1;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?snake=up')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px; transform:rotate(90deg);"/></div>
-					</div>
-					
-					<div class="grid-item" style="grid-column: 1; grid-row: 2;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?snake=left')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px;"/></div>
-					</div>
-					<div class="grid-item" style="grid-column: 2; grid-row: 2;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?snake=down')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px; transform:rotate(-90deg);"/></div>
-					</div>
-					<div class="grid-item" style="grid-column: 3; grid-row: 2;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?snake=right')" unselectable="on"><img src = "./icons/arrow_right.svg" style="height:30px;"/></div>
-					</div>
-				</div>
-			</div>
-			<div class="control-container">
-				<div class="buttonClass wide-button-bottom" onclick="sendCommand('./cmd?snake=new')" unselectable="on"><img src = "./icons/refresh.svg" style="height:30px"/></div>
-			</div>
-		</div>
-
-
-		<div class="main-container hidden" id="tetriscontainer">
-			<div class="verticalline">
-			</div>
-			<div class="headline">
-				TETRIS
-			</div>
-			<div class="control-container">
-				<div class="grid-container">
-					<div class="grid-item" style="grid-column: 2; grid-row: 1;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?tetris=up')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px; transform:rotate(90deg);"/></div>
-					</div>
-					
-					<div class="grid-item" style="grid-column: 1; grid-row: 2;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?tetris=left')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px;"/></div>
-					</div>
-					<div class="grid-item" style="grid-column: 2; grid-row: 2;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?tetris=down')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px; transform:rotate(-90deg);"/></div>
-					</div>
-					<div class="grid-item" style="grid-column: 3; grid-row: 2;">
-						<div class="buttonClass arrow-button" onclick="sendCommand('./cmd?tetris=right')" unselectable="on"><img src = "./icons/arrow_right.svg" style="height:30px;"/></div>
-					</div>
-				</div>
-			</div>
-			<div class="control-container">
-				<div class="buttonClass tetris-button-bottom" onclick="sendCommand('./cmd?tetris=play')" unselectable="on"><img src = "./icons/refresh.svg" style="height:20px"/></div>
-				<div class="buttonClass tetris-button-bottom" onclick="sendCommand('./cmd?tetris=pause')" unselectable="on"><img src = "./icons/playpause.svg" style="height:20px"/></div>
-			</div>
-		</div>
-
-		<div class="main-container hidden" id="pongcontainer">
-			<div class="verticalline">
-			</div>
-			<div class="headline">
-				PONG
-			</div>
-			<div class="control-container">
-				<div class="grid-container">
-
-					<div class="grid-item" style="grid-column: 1; grid-row: 1;">
-						<div class="buttonClass arrow-button" style="width: 140px" onclick="sendCommand('./cmd?pong=up')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px; transform:rotate(90deg);"/></div>
-					</div>
-
-					<div class="grid-item" style="grid-column: 1; grid-row: 2;">
-						<div class="buttonClass arrow-button" style="width: 140px" onclick="sendCommand('./cmd?pong=down')" unselectable="on"><img src = "./icons/arrow_left.svg" style="height:30px; transform:rotate(-90deg);"/></div>
-					</div>
-
-				</div>
-			</div>
-			<div class="control-container">
-				<div class="buttonClass wide-button-bottom" onclick="sendCommand('./cmd?pong=new')" unselectable="on"><img src = "./icons/refresh.svg" style="height:30px"/></div>
-			</div>
-		</div>
-		
-
-		<script>
-
-			var xmlhttp = new XMLHttpRequest();
-			var url = "./data?key=mode";
-			var myVar = null;
-
-			xmlhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					console.log(this.responseText);
-					myVar = JSON.parse(this.responseText);
-					// set mode button state
-					var state = myVar.modeid;
-					var modebuttons = document.getElementsByClassName("dot-mode");
-					for (const element of modebuttons){
-						element.classList.remove("active");
-					}
-					modebuttons[state].classList.add("active");
-
-					// set checkbox states
-					var ckb_nightmode = document.querySelector('input[id="Nightmode"]');
-					if(myVar.nightMode == "1") {
-						console.log("nightMode == 1");
-						ckb_nightmode.checked = true;
-					}
-					else {
-						console.log("nightMode == 0");
-						ckb_nightmode.checked = false;
-					}
-					ckb_nightmode.addEventListener('change', () => {
-						if(ckb_nightmode.checked) {
-							sendCommand("./cmd?nightmode=1");
-						} else {
-							sendCommand("./cmd?nightmode=0");
-						}
-					});
-
-					var ckb_stateautochange = document.querySelector('input[id="AutoChange"]');
-					if(myVar.stateAutoChange == "1") {
-						console.log("stateAutoChange == 1");
-						ckb_stateautochange.checked = true;
-					}
-					else {
-						console.log("stateAutoChange == 0");
-						ckb_stateautochange.checked = false;
-					}
-					ckb_stateautochange.addEventListener('change', () => {
-						if(ckb_stateautochange.checked) {
-							sendCommand("./cmd?stateautochange=1");
-						} else {
-							sendCommand("./cmd?stateautochange=0");
-						}
-					});
-					
-					document.getElementById("nm_start").value = myVar.nightModeStart.replace("-", ":");
-					document.getElementById("nm_end").value = myVar.nightModeEnd.replace("-", ":");
-					document.getElementById("brightness").value = parseInt(myVar.brightness);
-
-					updateDisplay(parseInt(myVar.modeid));
-					console.log(myVar);
-				}
-			};
-			xmlhttp.open("GET", url, true);
-			xmlhttp.send();
-			
-			function modechange(element, value){
-				console.log(element);
-				var modebuttons = document.getElementsByClassName("dot-mode");
-				for (const element of modebuttons){
-					element.classList.remove("active");
-				}
-				element.classList.add("active");
-
-				updateDisplay(value);
-			}
-
-			function updateDisplay(modeid){
-
-				var maincontainer = document.getElementsByClassName("main-container");
-				for (const element of maincontainer){
-					element.classList.add("hidden");
-				}
-				if(myVar != null && myVar.stateAutoChange == "0"){
-					switch(modeid){
-						case 0: // clock
-							document.getElementById("colorcontainer").classList.remove("hidden");
-							break;
-						case 1: // diclock
-							document.getElementById("colorcontainer").classList.remove("hidden");
-							break;
-						case 2: // spiral
-							break;
-						case 3: // tetris
-							document.getElementById("tetriscontainer").classList.remove("hidden");
-							break;
-						case 4: // snake
-							document.getElementById("snakecontainer").classList.remove("hidden");
-							break;
-						case 5: // pingping
-							document.getElementById("pongcontainer").classList.remove("hidden");
-							break;
-
-					}
-				}
-				
-			}
-
-			function sendCommand(command){
-				var xmlhttp = new XMLHttpRequest();
-				xmlhttp.open("GET", command, true);
-				xmlhttp.send();
-			}
-
-			function saveSettings(){
-				var nmStart = document.getElementById("nm_start");
-				var nmEnd = document.getElementById("nm_end");
-				var brightnessElmt = document.getElementById("brightness");
-				var cmdstr = "./cmd?setting=";
-				cmdstr += nmStart.value.replace(":", "-");
-				cmdstr += "-";
-				cmdstr += nmEnd.value.replace(":", "-");
-				cmdstr += "-";
-				cmdstr += brightnessElmt.value;
-				console.log(cmdstr);
-				sendCommand(cmdstr);
-				toggleSettings();
-			}
-
-			function toggleSettings(){
-				var container = document.getElementById("settings-container");
-				if(container.classList.contains("show")){
-					container.classList.remove("show");
-				}
-				else {
-					container.classList.add("show");
-				}
-			}
-			
-		</script>
-	</body>
+        function saveSettings() {
+            var nmStart = document.getElementById("nm_start");
+            var nmEnd = document.getElementById("nm_end");
+            var brightnessElmt = document.getElementById("brightness");
+            var cmdstr = "./cmd?setting=";
+            cmdstr += nmStart.value.replace(":", "-");
+            cmdstr += "-";
+            cmdstr += nmEnd.value.replace(":", "-");
+            cmdstr += "-";
+            cmdstr += brightnessElmt.value;
+            sendCommand(cmdstr);
+        }
+    </script>
+</body>
 
 </html>

@@ -4,18 +4,17 @@
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
-#include "udplogger.h"
 
 // width of the led matrix
 #define WIDTH 11
 // height of the led matrix
-#define HEIGHT 11
+#define HEIGHT 10
 
 #define DEFAULT_CURRENT_LIMIT 9999
 
 class LEDMatrix{
     public:
-        LEDMatrix(Adafruit_NeoMatrix *mymatrix, uint8_t mybrightness, UDPLogger *mylogger);
+        LEDMatrix(Adafruit_NeoMatrix *mymatrix, uint8_t mybrightness);
         static uint32_t Color24bit(uint8_t r, uint8_t g, uint8_t b);
         static uint16_t color24to16bit(uint32_t color24bit);
         static uint32_t Wheel(uint8_t WheelPos);
@@ -34,7 +33,6 @@ class LEDMatrix{
     private:
 
         Adafruit_NeoMatrix *neomatrix;
-        UDPLogger *logger;
 
         uint8_t brightness;
         uint16_t currentLimit;
@@ -49,12 +47,10 @@ class LEDMatrix{
                                             {0,0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0,0},
-                                            {0,0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0,0}};
 
         // current representation of matrix as 2D array
         uint32_t currentgrid[HEIGHT][WIDTH] = {{0,0,0,0,0,0,0,0,0,0,0},
-                                            {0,0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0,0},

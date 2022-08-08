@@ -1,5 +1,5 @@
-
-const String clockStringGerman =  "ESPISTAFUNFVIERTELZEHNZWANZIGUVORTECHNICNACHHALBMELFUNFXCONTROLLEREINSEAWZWEIDREITUMVIERSECHSQYACHTSIEBENZWOLFZEHNEUNJUHR";
+// const String clockStringGerman =  "ESPISTAFUNFVIERTELZEHNZWANZIGUVORTECHNICNACHHALBMELFUNFXCONTROLLEREINSEAWZWEIDREITUMVIERSECHSQYACHTSIEBENZWOLFZEHNEUNJUHR";
+const String clockString =   "ESKISCHUFUFVIERTUNFZAAZWANZGSEVORABCHAUBIECMEISZWOISDRUVIERIFUFISTSACHSISIBNIACHTINUNIELZANIECHEUFIZWOUFIENGSI";
 
 /**
  * @brief control the four minute indicator LEDs
@@ -62,13 +62,22 @@ int showStringOnClock(String message, uint32_t color){
       
       if(word.length() > 0){
         // find word in clock string
-        positionOfWord = clockStringGerman.indexOf(word, lastLetterClock);
+        positionOfWord = clockString.indexOf(word, lastLetterClock);
         
         if(positionOfWord >= 0){
           // word found on clock -> enable leds in targetgrid
           for(int i = 0; i < word.length(); i++){
-            int x = (positionOfWord + i)%WIDTH;
-            int y = (positionOfWord + i)/WIDTH;
+            int x = 0;
+            int y = 0;
+            if (ORIENTATION == 1) {
+              // row
+              x = (positionOfWord + i)%WIDTH;
+              y = (positionOfWord + i)/WIDTH;
+            } else {
+              // column
+              x = (positionOfWord + i - 1)%WIDTH + 1;
+              y = (positionOfWord + i - 1)/WIDTH + 1;
+            }
             ledmatrix.gridAddPixel(x, y, color);
           }
           // remember end of the word on clock
@@ -76,10 +85,9 @@ int showStringOnClock(String message, uint32_t color){
         }
         else{
           // word is not possible to show on clock
-          logger.logString("word is not possible to show on clock: " + String(word));
+          Serial.println("word is not possible to show on clock: " + String(word));
           return -1;
         }
-        //logger.logString(String(nextSpace) + " - " + String());
       }else{
         // end - no more word in message
         break;
@@ -101,53 +109,53 @@ String timeToString(uint8_t hours,uint8_t minutes){
   Serial.println(minutes);
   
   //ES IST
-  String message = "ES IST ";
+  String message = "ES ISCH ";
 
   
   //show minutes
   if(minutes >= 5 && minutes < 10)
   {
-    message += "FUNF NACH ";
+    message += "FUF AB ";
   }
   else if(minutes >= 10 && minutes < 15)
   {
-    message += "ZEHN NACH ";
+    message += "ZAA AB ";
   }
   else if(minutes >= 15 && minutes < 20)
   {
-    message += "VIERTEL NACH ";
+    message += "VIERTU AB ";
   }
   else if(minutes >= 20 && minutes < 25)
   {
-    message += "ZEHN VOR HALB "; 
+    message += "ZWANZG AB "; 
   }
   else if(minutes >= 25 && minutes < 30)
   {
-    message += "FUNF VOR HALB ";
+    message += "FUF VOR HAUBI ";
   }
   else if(minutes >= 30 && minutes < 35)
   {
-    message += "HALB ";
+    message += "HAUBI ";
   }
   else if(minutes >= 35 && minutes < 40)
   {
-    message += "FUNF NACH HALB ";
+    message += "FUF AB HAUBI ";
   }
   else if(minutes >= 40 && minutes < 45)
   {
-    message += "ZEHN NACH HALB ";
+    message += "ZAA AB HAUBI ";
   }
   else if(minutes >= 45 && minutes < 50)
   {
-    message += "VIERTEL VOR ";
+    message += "VIERTU VOR ";
   }
   else if(minutes >= 50 && minutes < 55)
   {
-    message += "ZEHN VOR ";
+    message += "ZAA VOR ";
   }
   else if(minutes >= 55 && minutes < 60)
   {
-    message += "FUNF VOR ";
+    message += "FUF VOR ";
   }
 
   //convert hours to 12h format
@@ -168,55 +176,55 @@ String timeToString(uint8_t hours,uint8_t minutes){
   switch(hours)
   {
   case 0:
-    message += "ZWOLF ";
+    message += "ZWOUFI ";
     break;
   case 1:
-    message += "EIN";
+    message += "EI";
+    /*
     //EIN(S)
     if(minutes > 4){
       message += "S";
     }
+    */
     message += " ";
     break;
   case 2:
-    message += "ZWEI ";
+    message += "ZWOI ";
     break;
   case 3:
-    message += "DREI ";
+    message += "DRU ";
     break;
   case 4:
-    message += "VIER ";
+    message += "VIERI ";
     break;
   case 5:
-    message += "FUNF ";
+    message += "FUFI ";
     break;
   case 6:
-    message += "SECHS ";
+    message += "SACHSI ";
     break;
   case 7:
-    message += "SIEBEN ";
+    message += "SIBNI ";
     break;
   case 8:
-    message += "ACHT ";
+    message += "ACHTI ";
     break;
   case 9:
-    message += "NEUN ";
+    message += "NUNI ";
     break;
   case 10:
-    message += "ZEHN ";
+    message += "ZANI ";
     break;
   case 11:
-    message += "ELF ";
+    message += "EUFI ";
     break;
   }
   if(minutes < 5)
   {
-    message += "UHR ";
+    message += "GSI ";
   }
 
   Serial.println(message);
-  logger.logString("time as String: " + String(message));
-
+  
   return message;
 }
-
