@@ -1,13 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// WIFI credentials
-#define WIFI_SSID "myssid"
-#define WIFI_PASS "mypassword"
-
 // credentials for Access Point
 #define AP_SSID "WordclockAP"
-#define AP_PASS "appassword"
 
 // Enable automatic restarting of the ESP to prevent overflowing the millis function
 #define AUTO_RESTART_ENABLED true
