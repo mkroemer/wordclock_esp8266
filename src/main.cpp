@@ -666,7 +666,6 @@ void setup()
   Serial.printf("\nSketchname: %s\nBuild: %s\n", (__FILE__), (__TIMESTAMP__));
   Serial.println();
 
-
   // Init EEPROM
   EEPROM.begin(EEPROM_SIZE);
 
@@ -885,6 +884,13 @@ void loop()
 
   // handle Webserver
   server.handleClient();
+
+  if (AUTO_RESTART_ENABLED && ((millis() > AUTO_RESTART_MILLIS) && (ntp.getHours24() == AUTO_RESTART_HOUR)))
+  {
+    ESP.restart();
+    delay(1000);
+    return;
+  }
 
   // send regularly heartbeat messages via UDP multicast
   if (millis() - lastheartbeat > PERIOD_HEARTBEAT)

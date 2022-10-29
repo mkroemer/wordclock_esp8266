@@ -9,6 +9,13 @@
 #define AP_SSID "WordclockAP"
 #define AP_PASS "appassword"
 
+// Enable automatic restarting of the ESP to prevent overflowing the millis function
+#define AUTO_RESTART_ENABLED true
+// millis() overflows at    4294967295
+#define AUTO_RESTART_MILLIS 3000000000
+// At which hour of the day the automatic should be triggered
+#define AUTO_RESTART_HOUR 4
+
 
 // width of the grid in characters
 #define GRID_WIDTH 11
