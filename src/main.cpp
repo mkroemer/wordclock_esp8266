@@ -695,6 +695,7 @@ void setup()
   if (drd->detectDoubleReset())
   {
     Serial.println("Double Reset Detected");
+    wifiManager.setConfigPortalTimeout(DBD_CONFIG_PORTAL_TIMEOUT);
     wifiManager.startConfigPortal(AP_SSID);
   }
   // Uncomment and run it once, if you want to erase all the stored information

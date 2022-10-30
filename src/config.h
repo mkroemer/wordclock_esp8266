@@ -11,6 +11,8 @@
 // At which hour of the day the automatic should be triggered
 #define AUTO_RESTART_HOUR 4
 
+#define DBD_CONFIG_PORTAL_TIMEOUT 60
+
 
 // width of the grid in characters
 #define GRID_WIDTH 11
