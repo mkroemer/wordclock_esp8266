@@ -129,7 +129,7 @@ DNSServer DnsServer;
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
 // example for more information on possible values.
-Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(GRID_WIDTH, GRID_HEIGHT + 1, NEOPIXELPIN, NEOPIXEL_MATRIX_TYPE, NEOPIXEL_LED_TYPE);
+Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(GRID_WIDTH + 1, GRID_HEIGHT, NEOPIXELPIN, NEOPIXEL_MATRIX_TYPE, NEOPIXEL_LED_TYPE);
 
 // seven predefined colors24bit (green, red, yellow, purple, orange, lightgreen, blue)
 const uint32_t colors24bit[NUM_COLORS] = {
@@ -167,7 +167,8 @@ float filterFactor = DEFAULT_SMOOTHING_FACTOR; // stores smoothing factor for le
 uint8_t currentState = st_clock;               // stores current state
 bool stateAutoChange = false;                  // stores state of automatic state change
 bool nightMode = false;                        // stores state of nightmode
-uint32_t maincolor_clock = colors24bit[2];     // color of the clock and digital clock
+uint32_t maincolor_clock = colors24bit[1];     // color of the clock and digital clock
+uint32_t secondcolor_clock = colors24bit[5];     // color of the clock and digital clock
 uint32_t maincolor_snake = colors24bit[1];     // color of the random snake animation
 bool apmode = false;                           // stores if WiFi AP mode is active
 
@@ -280,7 +281,7 @@ void entryAction(uint8_t state)
   case st_spiral:
     // Init spiral with normal drawing mode
     sprialDir = 0;
-    spiral(true, sprialDir, GRID_WIDTH - 6);
+    spiral(true, sprialDir, GRID_WIDTH - 3);
     break;
   case st_tetris:
     filterFactor = 1.0; // no smoothing
@@ -844,7 +845,7 @@ void setup()
   // init snake
   randomsnake(true, 8, colors24bit[1], -1);
   // init spiral
-  spiral(true, sprialDir, GRID_WIDTH - 6);
+  spiral(true, sprialDir, GRID_WIDTH - 3);
   // init random tetris
   randomtetris(true);
 
@@ -927,26 +928,26 @@ void loop()
     {
       int hours = ntp.getHours24();
       int minutes = ntp.getMinutes();
-      showDigitalClock(hours, minutes, maincolor_clock);
+      showDigitalClock(hours, minutes, maincolor_clock, secondcolor_clock);
     }
     break;
     // state spiral
     case st_spiral:
     {
-      int res = spiral(false, sprialDir, GRID_WIDTH - 6);
+      int res = spiral(false, sprialDir, GRID_WIDTH -3);
       if (res && sprialDir == 0)
       {
         // change spiral direction to closing (draw empty leds)
         sprialDir = 1;
         // init spiral with new spiral direction
-        spiral(true, sprialDir, GRID_WIDTH - 6);
+        spiral(true, sprialDir, GRID_WIDTH - 3);
       }
       else if (res && sprialDir == 1)
       {
         // reset spiral direction to normal drawing leds
         sprialDir = 0;
         // init spiral with new spiral direction
-        spiral(true, sprialDir, GRID_WIDTH - 6);
+        spiral(true, sprialDir, GRID_WIDTH - 3);
       }
     }
     break;

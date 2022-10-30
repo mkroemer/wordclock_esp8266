@@ -12,7 +12,6 @@
 #ifndef udplogger_h
 #define udplogger_h
 
-#include <Arduino.h>
 #include <WiFiUdp.h>
 
 

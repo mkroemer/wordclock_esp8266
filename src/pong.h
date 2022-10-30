@@ -20,8 +20,8 @@
 
 #define DEBOUNCE_TIME 10  // in ms
 
-#define X_MAX 11
-#define Y_MAX 11
+#define X_MAX GRID_WIDTH
+#define Y_MAX GRID_HEIGHT
 
 #define GAME_DELAY 80         // in ms
 #define BALL_DELAY_MAX   350  // in ms

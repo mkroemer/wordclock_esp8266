@@ -65,7 +65,7 @@ int spiral(bool init, bool empty, uint8_t size){
     logger.logString("Init Spiral with empty=" + String(empty));
     dir1 = down;          // current direction
     x = GRID_WIDTH/2;
-    y = GRID_WIDTH/2;
+    y = GRID_WIDTH/2-1;
     if(!empty)ledmatrix.gridFlush();
     counter1 = 0;
     countStep = 0;
@@ -202,7 +202,7 @@ int randomsnake(bool init, const uint8_t len, const uint32_t color, int numSteps
  * @param minutes minutes of time to display
  * @param color  color to display (24bit)
  */
-void showDigitalClock(uint8_t hours, uint8_t minutes, uint32_t color){
+void showDigitalClock(uint8_t hours, uint8_t minutes, uint32_t color, uint32_t color2){
   ledmatrix.gridFlush();
   uint8_t fstDigitH = hours/10;
   uint8_t sndDigitH = hours%10;
@@ -210,8 +210,8 @@ void showDigitalClock(uint8_t hours, uint8_t minutes, uint32_t color){
   uint8_t sndDigitM = minutes%10;
   ledmatrix.printNumber(2, 0, fstDigitH, color);
   ledmatrix.printNumber(6, 0, sndDigitH, color);
-  ledmatrix.printNumber(2, 6, fstDigitM, color);
-  ledmatrix.printNumber(6, 6, sndDigitM, color);
+  ledmatrix.printNumber(2, 5, fstDigitM, color2);
+  ledmatrix.printNumber(6, 5, sndDigitM, color2);
 }
 
 /**

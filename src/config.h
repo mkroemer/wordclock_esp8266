@@ -10,7 +10,7 @@
 #define AUTO_RESTART_MILLIS 3000000000
 // At which hour of the day the automatic should be triggered
 #define AUTO_RESTART_HOUR 4
-
+// 2x times pressing reset button will start AP for 60 seconds
 #define DBD_CONFIG_PORTAL_TIMEOUT 60
 
 
@@ -21,7 +21,7 @@
 
 #define ORIENTATION 1
 
-#define NEOPIXELPIN 10       // pin to which the NeoPixels are attached
+#define NEOPIXELPIN 13       // pin to which the NeoPixels are attached
 #define NEOPIXEL_MATRIX_TYPE (NEO_MATRIX_TOP + NEO_MATRIX_LEFT + NEO_MATRIX_COLUMNS + NEO_MATRIX_ZIGZAG)
 #define NEOPIXEL_LED_TYPE (NEO_GRB + NEO_KHZ800)
 #define NUMPIXELS 113       // number of pixels attached to Attiny85
