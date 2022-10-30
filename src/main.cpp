@@ -168,7 +168,7 @@ uint8_t currentState = st_clock;               // stores current state
 bool stateAutoChange = false;                  // stores state of automatic state change
 bool nightMode = false;                        // stores state of nightmode
 uint32_t maincolor_clock = colors24bit[1];     // color of the clock and digital clock
-uint32_t secondcolor_clock = colors24bit[5];     // color of the clock and digital clock
+uint32_t secondcolor_clock = colors24bit[5];   // color of the clock and digital clock
 uint32_t maincolor_snake = colors24bit[1];     // color of the random snake animation
 bool apmode = false;                           // stores if WiFi AP mode is active
 
@@ -281,7 +281,7 @@ void entryAction(uint8_t state)
   case st_spiral:
     // Init spiral with normal drawing mode
     sprialDir = 0;
-    spiral(true, sprialDir, GRID_WIDTH - 3);
+    spiral(true, sprialDir, GRID_WIDTH - 4);
     break;
   case st_tetris:
     filterFactor = 1.0; // no smoothing
@@ -473,6 +473,12 @@ void handleCommand()
     logger.logString("b: " + String(bluestr.toInt()));
     // set new main color
     maincolor_clock = LEDMatrix::Color24bit(redstr.toInt(), greenstr.toInt(), bluestr.toInt());
+    secondcolor_clock = LEDMatrix::Color24bit(255 - redstr.toInt(), 255 - greenstr.toInt(), 255 - bluestr.toInt());
+    if (secondcolor_clock == LEDMatrix::Color24bit(0, 0, 0))
+    {
+      maincolor_clock = LEDMatrix::Color24bit(125, 125, 125);
+      secondcolor_clock = LEDMatrix::Color24bit(255, 255, 255);
+    }
   }
   else if (server.argName(0) == "mode") // the parameter which was sent to this server is mode change
   {
@@ -845,7 +851,7 @@ void setup()
   // init snake
   randomsnake(true, 8, colors24bit[1], -1);
   // init spiral
-  spiral(true, sprialDir, GRID_WIDTH - 3);
+  spiral(true, sprialDir, GRID_WIDTH - 4);
   // init random tetris
   randomtetris(true);
 
@@ -934,20 +940,20 @@ void loop()
     // state spiral
     case st_spiral:
     {
-      int res = spiral(false, sprialDir, GRID_WIDTH -3);
+      int res = spiral(false, sprialDir, GRID_WIDTH - 4);
       if (res && sprialDir == 0)
       {
         // change spiral direction to closing (draw empty leds)
         sprialDir = 1;
         // init spiral with new spiral direction
-        spiral(true, sprialDir, GRID_WIDTH - 3);
+        spiral(true, sprialDir, GRID_WIDTH - 4);
       }
       else if (res && sprialDir == 1)
       {
         // reset spiral direction to normal drawing leds
         sprialDir = 0;
         // init spiral with new spiral direction
-        spiral(true, sprialDir, GRID_WIDTH - 3);
+        spiral(true, sprialDir, GRID_WIDTH - 4);
       }
     }
     break;
