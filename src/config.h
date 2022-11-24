@@ -18,7 +18,7 @@
 #define GRID_WIDTH 11
 // height of the gird in characters
 #define GRID_HEIGHT 10
-
+// 1 orientation is in collumns, 2 is in rows 
 #define ORIENTATION 1
 
 #define NEOPIXELPIN 13       // pin to which the NeoPixels are attached

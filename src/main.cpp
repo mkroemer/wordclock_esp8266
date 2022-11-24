@@ -69,7 +69,7 @@ enum ClockState
   st_snake,
   st_pingpong
 };
-const String stateNames[] = {"Clock", "DiClock", "Sprial", "Tetris", "Snake", "PingPong"};
+const String stateNames[] = {"Clock", "DiClock", "Spiral", "Tetris", "Snake", "PingPong"};
 // PERIODS for each state (different for stateAutoChange or Manual mode)
 const uint16_t PERIODS[2][NUM_STATES] = {{PERIOD_TIMEVISUUPDATE, // stateAutoChange = 0
                                           PERIOD_TIMEVISUUPDATE,
@@ -142,7 +142,7 @@ const uint32_t colors24bit[NUM_COLORS] = {
     LEDMatrix::Color24bit(0, 0, 255)};
 
 uint8_t brightness = 40; // current brightness of leds
-bool sprialDir = false;
+bool spiralDir = false;
 
 // timestamp variables
 long lastheartbeat = millis();      // time of last heartbeat sending
@@ -173,7 +173,7 @@ uint32_t maincolor_snake = colors24bit[1];     // color of the random snake anim
 bool apmode = false;                           // stores if WiFi AP mode is active
 
 // nightmode settings
-int nightModeStartHour = 22;
+int nightModeStartHour = 23;
 int nightModeStartMin = 0;
 int nightModeEndHour = 7;
 int nightModeEndMin = 0;
@@ -280,8 +280,8 @@ void entryAction(uint8_t state)
   {
   case st_spiral:
     // Init spiral with normal drawing mode
-    sprialDir = 0;
-    spiral(true, sprialDir, GRID_WIDTH - 4);
+    spiralDir = 0;
+    spiral(true, spiralDir, GRID_WIDTH - 4);
     break;
   case st_tetris:
     filterFactor = 1.0; // no smoothing
@@ -851,7 +851,7 @@ void setup()
   // init snake
   randomsnake(true, 8, colors24bit[1], -1);
   // init spiral
-  spiral(true, sprialDir, GRID_WIDTH - 4);
+  spiral(true, spiralDir, GRID_WIDTH - 4);
   // init random tetris
   randomtetris(true);
 
@@ -940,20 +940,20 @@ void loop()
     // state spiral
     case st_spiral:
     {
-      int res = spiral(false, sprialDir, GRID_WIDTH - 4);
-      if (res && sprialDir == 0)
+      int res = spiral(false, spiralDir, GRID_WIDTH - 4);
+      if (res && spiralDir == 0)
       {
         // change spiral direction to closing (draw empty leds)
-        sprialDir = 1;
+        spiralDir = 1;
         // init spiral with new spiral direction
-        spiral(true, sprialDir, GRID_WIDTH - 4);
+        spiral(true, spiralDir, GRID_WIDTH - 4);
       }
-      else if (res && sprialDir == 1)
+      else if (res && spiralDir == 1)
       {
         // reset spiral direction to normal drawing leds
-        sprialDir = 0;
+        spiralDir = 0;
         // init spiral with new spiral direction
-        spiral(true, sprialDir, GRID_WIDTH - 4);
+        spiral(true, spiralDir, GRID_WIDTH - 4);
       }
     }
     break;

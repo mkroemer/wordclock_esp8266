@@ -206,13 +206,11 @@ String timeToString(uint8_t hours,uint8_t minutes){
     message += "ZWOUFI ";
     break;
   case 1:
+    //EI(S)
     message += "EI";
-    /*
-    //EIN(S)
     if(minutes > 4){
       message += "S";
     }
-    */
     message += " ";
     break;
   case 2:
