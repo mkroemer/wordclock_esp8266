@@ -22,9 +22,9 @@
 #define ORIENTATION 1
 
 #define NEOPIXELPIN 13       // pin to which the NeoPixels are attached
-#define NEOPIXEL_MATRIX_TYPE (NEO_MATRIX_TOP + NEO_MATRIX_LEFT + NEO_MATRIX_COLUMNS + NEO_MATRIX_ZIGZAG)
+#define NEOPIXEL_MATRIX_TYPE (NEO_MATRIX_BOTTOM + NEO_MATRIX_RIGHT + NEO_MATRIX_COLUMNS + NEO_MATRIX_ZIGZAG)
 #define NEOPIXEL_LED_TYPE (NEO_GRB + NEO_KHZ800)
-#define NUMPIXELS 113       // number of pixels attached to Attiny85
+#define NUMPIXELS 114       // number of pixels attached to Attiny85
 #define BUTTONPIN 14        // pin to which the button is attached
 #define LEFT 1
 #define RIGHT 2
