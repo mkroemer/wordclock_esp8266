@@ -29,6 +29,7 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 #include <WebServer.h>
+#include <LittleFS.h>  // Add LittleFS support for ESP32
 #include "Base64.h" // copied from https://github.com/Xander-Electronics/Base64
 #include <DNSServer.h>
 #include <WiFiManager.h>             //https://github.com/tzapu/WiFiManager WiFi Configuration Magic
@@ -39,12 +40,14 @@
 //                                        CONSTANTS
 // ----------------------------------------------------------------------------------
 
-#define EEPROM_SIZE 20 // size of EEPROM to save persistent variables
+#define EEPROM_SIZE 28 // size of EEPROM to save persistent variables
 #define ADR_NM_START_H 0
 #define ADR_NM_END_H 4
 #define ADR_NM_START_M 8
 #define ADR_NM_END_M 12
 #define ADR_BRIGHTNESS 16
+#define ADR_MAINCOLOR_CLOCK 20
+#define ADR_SECONDCOLOR_CLOCK 24
 
 // number of colors in colors array
 #define NUM_COLORS 7
@@ -179,6 +182,25 @@ int nightModeEndHour = 7;
 int nightModeEndMin = 0;
 
 DoubleResetDetector *drd;
+
+/**
+ * @brief Write any type to EEPROM
+ */
+template<typename T>
+void writeEEPROM(int address, T value) {
+  EEPROM.put(address, value);
+  EEPROM.commit();
+}
+
+/**
+ * @brief Read any type from EEPROM
+ */
+template<typename T>
+T readEEPROM(int address) {
+  T value;
+  EEPROM.get(address, value);
+  return value;
+}
 
 // ----------------------------------------------------------------------------------
 //                                        OTHER FUNCTIONS
@@ -479,6 +501,9 @@ void handleCommand()
       maincolor_clock = LEDMatrix::Color24bit(125, 125, 125);
       secondcolor_clock = LEDMatrix::Color24bit(255, 255, 255);
     }
+    // Save colors to EEPROM
+    writeEEPROM<uint32_t>(ADR_MAINCOLOR_CLOCK, maincolor_clock);
+    writeEEPROM<uint32_t>(ADR_SECONDCOLOR_CLOCK, secondcolor_clock);
   }
   else if (server.argName(0) == "mode") // the parameter which was sent to this server is mode change
   {
@@ -877,6 +902,30 @@ void setup()
   brightness = readIntEEPROM(ADR_BRIGHTNESS);
   logger.logString("Brightness: " + String(brightness));
   ledmatrix.setBrightness(brightness);
+
+  // Read clock colors from EEPROM
+  uint32_t savedMainColor = readEEPROM<uint32_t>(ADR_MAINCOLOR_CLOCK);
+  uint32_t savedSecondColor = readEEPROM<uint32_t>(ADR_SECONDCOLOR_CLOCK);
+  if (savedMainColor != 0xFFFFFFFF && savedMainColor != 0) maincolor_clock = savedMainColor;
+  if (savedSecondColor != 0xFFFFFFFF && savedSecondColor != 0) secondcolor_clock = savedSecondColor;
+
+  // show initial state
+  showStringOnClock("00:00", maincolor_clock);
+  drawMinuteIndicator(0, maincolor_clock);
+  ledmatrix.drawOnMatrixSmooth(filterFactor);
+
+  // Set matrix rotation from config
+  #if MATRIX_ROTATION == 0
+    matrix.setRotation(0);
+  #elif MATRIX_ROTATION == 90
+    matrix.setRotation(1);
+  #elif MATRIX_ROTATION == 180
+    matrix.setRotation(2);
+  #elif MATRIX_ROTATION == 270
+    matrix.setRotation(3);
+  #else
+    matrix.setRotation(0); // fallback
+  #endif
 }
 
 // ----------------------------------------------------------------------------------

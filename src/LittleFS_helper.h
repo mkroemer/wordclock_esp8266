@@ -31,7 +31,7 @@
 #include <list>
 #include <tuple>
 #include <FS.h>
-#include <LITTLEFS.h>
+#include <LittleFS.h>
 
 extern WebServer server;
 

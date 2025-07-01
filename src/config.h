@@ -59,4 +59,7 @@
 
 #define ESP_DRD_USE_LITTLEFS true
 
+// Matrix rotation: 0, 90, 180, 270 degrees
+#define MATRIX_ROTATION 0 // Change to 90, 180, or 270 as needed
+
 #endif

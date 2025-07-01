@@ -24,22 +24,23 @@ void drawMinuteIndicator(uint8_t minutes, uint32_t color){
   switch (minutes%5)
     { 
       case 0:
+        ledmatrix.setMinIndicator(0b0000, 0); // Clear all minute indicators with no color
         break;
           
       case 1:
-        ledmatrix.setMinIndicator(0b1000, color);
+        ledmatrix.setMinIndicator(0b0001, color); // First LED clockwise
         break;
 
       case 2:
-        ledmatrix.setMinIndicator(0b1100, color);
+        ledmatrix.setMinIndicator(0b0011, color); // First two LEDs clockwise
         break;
 
       case 3:
-        ledmatrix.setMinIndicator(0b1110, color);
+        ledmatrix.setMinIndicator(0b0111, color); // First three LEDs clockwise
         break;
 
       case 4:
-        ledmatrix.setMinIndicator(0b1111, color);
+        ledmatrix.setMinIndicator(0b1111, color); // All four LEDs
         break;
     }
   }
@@ -166,7 +167,8 @@ String timeToString(uint8_t hours,uint8_t minutes){
   }
   else if(minutes >= 35 && minutes < 40)
   {
-    message += "FUF AB HAUBI ";
+    // message += "FUF AB HAUBI ";
+    message += "ZWANZG VOR ";
   }
   else if(minutes >= 40 && minutes < 45)
   {
@@ -190,7 +192,7 @@ String timeToString(uint8_t hours,uint8_t minutes){
   {
       hours -= 12;
   }
-  if(minutes >= 20)
+  if(minutes >= 25)
   {
       hours++;
   }
@@ -207,10 +209,10 @@ String timeToString(uint8_t hours,uint8_t minutes){
     break;
   case 1:
     //EI(S)
-    message += "EI";
-    if(minutes > 4){
-      message += "S";
-    }
+    message += "EIS ";
+    // if(minutes > 4){
+    //   message += "S";
+    // }
     message += " ";
     break;
   case 2:

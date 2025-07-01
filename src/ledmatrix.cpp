@@ -113,6 +113,14 @@ void LEDMatrix::setMinIndicator(uint8_t pattern, uint32_t color)
   //  2 -> 0010
   //  1 -> 0001
   //  0 -> 0000
+  
+  // Clear all indicators first
+  targetindicators[0] = 0;
+  targetindicators[1] = 0;
+  targetindicators[2] = 0;
+  targetindicators[3] = 0;
+  
+  // Set only the indicators that should be on (clockwise order)
   if (pattern & 1)
   {
     targetindicators[0] = color;
@@ -212,11 +220,14 @@ void LEDMatrix::drawOnMatrix(float factor)
     }
   }
 
-  // loop over all minute indicator leds
+  // loop over all minute indicator leds (positioned at the end of the LED strip)
   for (int i = 0; i < 4; i++)
   {
-    uint32_t filteredColor = interpolateColor24bit(currentindicators[i], targetindicators[i], factor);
-    (*neomatrix).drawPixel(0, (4 - i) % 4, color24to16bit(filteredColor));
+    // Force immediate update (factor = 1.0) when target is off to ensure complete turn-off
+    float indicatorFactor = (targetindicators[i] == 0) ? 1.0 : factor;
+    uint32_t filteredColor = interpolateColor24bit(currentindicators[i], targetindicators[i], indicatorFactor);
+    // Set minute indicators at LEDs 110, 111, 112, 113 (after the 11x10 matrix)
+    (*neomatrix).setPixelColor(110 + i, filteredColor);
     currentindicators[i] = filteredColor;
     totalCurrent += calcEstimatedLEDCurrent(filteredColor);
   }
