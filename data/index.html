@@ -261,6 +261,172 @@
 		margin: 5px; 
 		background-color: rgba(147, 147, 158, 0.4);
 	}
+
+	.rgb-container{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 15px 10px;
+		padding: 15px;
+		background: rgba(59, 57, 57, 0.308);
+		border-radius: 10px;
+	}
+
+	.rgb-inputs{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		margin: 10px 0;
+		width: 100%;
+		max-width: 300px;
+	}
+
+	.rgb-input-group{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 0 5px;
+	}
+
+	.rgb-input-group label{
+		color: white;
+		font-size: 12px;
+		margin-bottom: 5px;
+		text-align: center;
+	}
+
+	.rgb-input{
+		width: 60px;
+		height: 35px;
+		background: rgba(147, 147, 158, 0.4);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 5px;
+		color: white;
+		text-align: center;
+		font-size: 14px;
+	}
+
+	.rgb-input:focus{
+		outline: none;
+		border-color: lightgray;
+	}
+
+	.custom-color-preview{
+		width: 70px;
+		height: 70px;
+		border-radius: 20%;
+		margin: 10px 0;
+		border: 2px solid rgba(255, 255, 255, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	}
+
+	.rgb-apply-button{
+		width: 100px;
+		height: 35px;
+		background-color: rgba(147, 147, 158, 0.4);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 5px;
+		color: white;
+		cursor: pointer;
+		margin-top: 5px;
+	}
+
+	.rgb-apply-button:hover{
+		opacity: 0.7;
+	}
+
+	.color-wheel-container{
+		position: relative;
+		width: 150px;
+		height: 150px;
+		margin: 10px 0;
+	}
+
+	.color-wheel{
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		transform: rotate(180deg);
+		cursor: crosshair;
+		position: relative;
+		background: conic-gradient(
+			from 0deg,
+			hsl(0, 100%, 50%),
+			hsl(60, 100%, 50%),
+			hsl(120, 100%, 50%),
+			hsl(180, 100%, 50%),
+			hsl(240, 100%, 50%),
+			hsl(300, 100%, 50%),
+			hsl(360, 100%, 50%)
+		);
+	}
+
+	.color-wheel::after{
+		content: '';
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		right: 10px;
+		bottom: 10px;
+		border-radius: 50%;
+		background: radial-gradient(
+			circle at center,
+			transparent 0%,
+			transparent 30%,
+			rgba(255, 255, 255, 0.3) 70%,
+			rgba(255, 255, 255, 0.8) 100%
+		);
+	}
+
+	.color-wheel-picker{
+		display:none;
+		position: absolute;
+		width: 12px;
+		height: 12px;
+		border: 2px solid white;
+		border-radius: 50%;
+		background: transparent;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+		transform: translate(-50%, -50%);
+		pointer-events: none;
+		z-index: 10;
+	}
+
+	.brightness-slider-container{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 10px 0;
+		width: 100%;
+		max-width: 200px;
+	}
+
+	.brightness-slider{
+		width: 150px;
+		height: 20px;
+		border-radius: 10px;
+		background: linear-gradient(to right, #000, #fff);
+		position: relative;
+		cursor: pointer;
+	}
+
+	.brightness-handle{
+		position: absolute;
+		width: 18px;
+		height: 18px;
+		border: 2px solid white;
+		border-radius: 50%;
+		background: transparent;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+		transform: translate(-50%, -50%);
+		top: 50%;
+		pointer-events: none;
+		z-index: 10;
+	}
   
 	</style>
 	<title>WORDCLOCK</title>
@@ -337,6 +503,36 @@
 					<div class="grid-item"><span class="dot"><a href="cmd?led=200-200-0" class="buttonClass" style="background:rgb(200,200,0);"></a></span></div>
 					<div class="grid-item"><span class="dot"><a href="cmd?led=255-128-0" class="buttonClass" style="background:rgb(255,128,0);"></a></span></div> -->
 				</div>
+			</div>
+			<div class="rgb-container">
+				<div class="headline" style="font-size: medium; margin-bottom: 10px;">CUSTOM COLOR</div>
+				<div class="color-wheel-container">
+					<div class="color-wheel" id="color-wheel">
+						<div class="color-wheel-picker" id="color-picker"></div>
+					</div>
+				</div>
+				<div class="brightness-slider-container">
+					<label style="font-size: 12px; margin-bottom: 5px;">Brightness</label>
+					<div class="brightness-slider" id="brightness-slider">
+						<div class="brightness-handle" id="brightness-handle"></div>
+					</div>
+				</div>
+				<div class="rgb-inputs">
+					<div class="rgb-input-group">
+						<label for="rgb-red">Red</label>
+						<input type="number" id="rgb-red" class="rgb-input" min="0" max="255" value="255">
+					</div>
+					<div class="rgb-input-group">
+						<label for="rgb-green">Green</label>
+						<input type="number" id="rgb-green" class="rgb-input" min="0" max="255" value="0">
+					</div>
+					<div class="rgb-input-group">
+						<label for="rgb-blue">Blue</label>
+						<input type="number" id="rgb-blue" class="rgb-input" min="0" max="255" value="0">
+					</div>
+				</div>
+				<div class="custom-color-preview" id="color-preview" onclick="applyCustomColor()" style="background: rgb(255,0,0);"></div>
+				<div class="buttonClass rgb-apply-button" onclick="applyCustomColor()">APPLY</div>
 			</div>
 		</div>
 
@@ -560,6 +756,287 @@
 					container.classList.add("show");
 				}
 			}
+
+			// Color wheel variables
+			let currentHue = 0;
+			let currentSaturation = 100;
+			let currentLightness = 50;
+			let currentRed = 255;
+			let currentGreen = 0;
+			let currentBlue = 0;
+
+			function updateColorPreview(){
+				var colorPreview = document.getElementById("color-preview");
+				colorPreview.style.background = `rgb(${currentRed},${currentGreen},${currentBlue})`;
+				
+				// Update RGB input fields
+				document.getElementById("rgb-red").value = currentRed;
+				document.getElementById("rgb-green").value = currentGreen;
+				document.getElementById("rgb-blue").value = currentBlue;
+			}
+
+			function hslToRgb(h, s, l) {
+				h = h / 360;
+				s = s / 100;
+				l = l / 100;
+
+				const c = (1 - Math.abs(2 * l - 1)) * s;
+				const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+				const m = l - c / 2;
+
+				let r, g, b;
+
+				if (0 <= h && h < 1/6) {
+					r = c; g = x; b = 0;
+				} else if (1/6 <= h && h < 2/6) {
+					r = x; g = c; b = 0;
+				} else if (2/6 <= h && h < 3/6) {
+					r = 0; g = c; b = x;
+				} else if (3/6 <= h && h < 4/6) {
+					r = 0; g = x; b = c;
+				} else if (4/6 <= h && h < 5/6) {
+					r = x; g = 0; b = c;
+				} else {
+					r = c; g = 0; b = x;
+				}
+
+				return {
+					r: Math.round((r + m) * 255),
+					g: Math.round((g + m) * 255),
+					b: Math.round((b + m) * 255)
+				};
+			}
+
+			function updateColorFromWheel(hue, saturation, lightness) {
+				currentHue = hue;
+				currentSaturation = saturation;
+				currentLightness = lightness;
+
+				const rgb = hslToRgb(hue, saturation, lightness);
+				currentRed = rgb.r;
+				currentGreen = rgb.g;
+				currentBlue = rgb.b;
+
+				updateColorPreview();
+			}
+
+			function rgbToHsl(r, g, b) {
+				r /= 255;
+				g /= 255;
+				b /= 255;
+
+				const max = Math.max(r, g, b);
+				const min = Math.min(r, g, b);
+				const diff = max - min;
+				const sum = max + min;
+				const l = sum / 2;
+
+				let h, s;
+
+				if (diff === 0) {
+					h = s = 0;
+				} else {
+					s = l > 0.5 ? diff / (2 - sum) : diff / sum;
+
+					switch (max) {
+						case r: h = (g - b) / diff + (g < b ? 6 : 0); break;
+						case g: h = (b - r) / diff + 2; break;
+						case b: h = (r - g) / diff + 4; break;
+					}
+					h /= 6;
+				}
+
+				return {
+					h: h * 360,
+					s: s * 100,
+					l: l * 100
+				};
+			}
+
+			function updateColorFromRgb(red, green, blue) {
+				currentRed = red;
+				currentGreen = green;
+				currentBlue = blue;
+
+				const hsl = rgbToHsl(red, green, blue);
+				currentHue = hsl.h;
+				currentSaturation = hsl.s;
+				currentLightness = hsl.l;
+
+				updateWheelPosition();
+				updateColorPreview();
+			}
+
+			function updateWheelPosition() {
+				const colorPicker = document.getElementById('color-picker');
+				const brightnessHandle = document.getElementById('brightness-handle');
+				const wheelRadius = 75;
+
+				// Update color wheel picker position
+				// Adjust for visual gradient where red appears at the top
+				// Convert hue to visual angle (add 90° to match gradient position)
+				const angle = ((currentHue + 90) * Math.PI) / 180;
+				const distance = (currentSaturation / 100) * wheelRadius;
+				const pickerX = wheelRadius + Math.cos(angle) * distance;
+				const pickerY = wheelRadius + Math.sin(angle) * distance;
+
+				colorPicker.style.left = pickerX + 'px';
+				colorPicker.style.top = pickerY + 'px';
+
+				// Update brightness slider position
+				const brightnessPercentage = Math.max(0, Math.min(100, ((currentLightness - 10) / 80) * 100));
+				brightnessHandle.style.left = brightnessPercentage + '%';
+			}
+
+			function handleRgbInput() {
+				const red = Math.max(0, Math.min(255, parseInt(document.getElementById("rgb-red").value) || 0));
+				const green = Math.max(0, Math.min(255, parseInt(document.getElementById("rgb-green").value) || 0));
+				const blue = Math.max(0, Math.min(255, parseInt(document.getElementById("rgb-blue").value) || 0));
+
+				updateColorFromRgb(red, green, blue);
+			}
+
+			function setupColorWheel() {
+				const colorWheel = document.getElementById('color-wheel');
+				const colorPicker = document.getElementById('color-picker');
+				const brightnessSlider = document.getElementById('brightness-slider');
+				const brightnessHandle = document.getElementById('brightness-handle');
+
+				let isDraggingWheel = false;
+				let isDraggingBrightness = false;
+
+				// Set initial positions
+				const wheelRadius = 75;
+				const initialAngle = 0; // 0 degrees = red, pointing right
+				const initialDistance = wheelRadius * 0.8;
+				
+				const pickerX = wheelRadius + Math.cos(initialAngle) * initialDistance;
+				const pickerY = wheelRadius + Math.sin(initialAngle) * initialDistance; // Changed: don't flip Y
+				
+				colorPicker.style.left = pickerX + 'px';
+				colorPicker.style.top = pickerY + 'px';
+				
+				brightnessHandle.style.left = '50%';
+
+				function handleWheelInteraction(e) {
+					const rect = colorWheel.getBoundingClientRect();
+					const centerX = rect.left + rect.width / 2;
+					const centerY = rect.top + rect.height / 2;
+					
+					const x = e.clientX - centerX;
+					const y = e.clientY - centerY;
+					
+					const distance = Math.sqrt(x * x + y * y);
+					const maxDistance = wheelRadius;
+					
+					if (distance <= maxDistance) {
+						const angle = Math.atan2(y, x);
+						// Convert angle to 0-360 degrees and adjust for visual gradient
+						// The gradient visually starts with red at the top (270° in math coordinates)
+						// but we want red to be hue 0°
+						let hue = ((angle * 180 / Math.PI) - 90 + 360) % 360;
+						
+						const saturation = Math.min(100, (distance / maxDistance) * 100);
+						
+						const pickerDistance = Math.min(distance, maxDistance);
+						const pickerX = wheelRadius + Math.cos(angle) * pickerDistance;
+						const pickerY = wheelRadius + Math.sin(angle) * pickerDistance;
+						
+						colorPicker.style.left = pickerX + 'px';
+						colorPicker.style.top = pickerY + 'px';
+						
+						updateColorFromWheel(hue, saturation, currentLightness);
+					}
+				}
+
+				function handleBrightnessInteraction(e) {
+					const rect = brightnessSlider.getBoundingClientRect();
+					const x = e.clientX - rect.left;
+					const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+					
+					brightnessHandle.style.left = percentage + '%';
+					
+					const lightness = 10 + (percentage / 100) * 80; // Range from 10% to 90%
+					updateColorFromWheel(currentHue, currentSaturation, lightness);
+				}
+
+				// Color wheel events
+				colorWheel.addEventListener('mousedown', (e) => {
+					isDraggingWheel = true;
+					handleWheelInteraction(e);
+					e.preventDefault();
+				});
+
+				colorWheel.addEventListener('touchstart', (e) => {
+					isDraggingWheel = true;
+					handleWheelInteraction(e.touches[0]);
+					e.preventDefault();
+				});
+
+				// Brightness slider events
+				brightnessSlider.addEventListener('mousedown', (e) => {
+					isDraggingBrightness = true;
+					handleBrightnessInteraction(e);
+					e.preventDefault();
+				});
+
+				brightnessSlider.addEventListener('touchstart', (e) => {
+					isDraggingBrightness = true;
+					handleBrightnessInteraction(e.touches[0]);
+					e.preventDefault();
+				});
+
+				// Global move and end events
+				document.addEventListener('mousemove', (e) => {
+					if (isDraggingWheel) {
+						handleWheelInteraction(e);
+					} else if (isDraggingBrightness) {
+						handleBrightnessInteraction(e);
+					}
+				});
+
+				document.addEventListener('touchmove', (e) => {
+					if (isDraggingWheel) {
+						handleWheelInteraction(e.touches[0]);
+					} else if (isDraggingBrightness) {
+						handleBrightnessInteraction(e.touches[0]);
+					}
+				});
+
+				document.addEventListener('mouseup', () => {
+					isDraggingWheel = false;
+					isDraggingBrightness = false;
+				});
+
+				document.addEventListener('touchend', () => {
+					isDraggingWheel = false;
+					isDraggingBrightness = false;
+				});
+			}
+
+			function applyCustomColor(){
+				// Ensure values are within valid range
+				const red = Math.max(0, Math.min(255, currentRed));
+				const green = Math.max(0, Math.min(255, currentGreen));
+				const blue = Math.max(0, Math.min(255, currentBlue));
+				
+				var command = `./cmd?led=${red}-${green}-${blue}`;
+				console.log("Applying custom color:", command);
+				sendCommand(command);
+			}
+
+			// Add event listeners for color wheel setup
+			document.addEventListener('DOMContentLoaded', function() {
+				setupColorWheel();
+				updateColorPreview();
+				
+				// Add event listeners for RGB inputs
+				const rgbInputs = document.querySelectorAll('.rgb-input');
+				rgbInputs.forEach(function(input) {
+					input.addEventListener('input', handleRgbInput);
+					input.addEventListener('change', handleRgbInput);
+				});
+			});
 			
 		</script>
 	</body>

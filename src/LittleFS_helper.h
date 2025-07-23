@@ -159,7 +159,7 @@ bool handleFile(String &&path) {
   // server.send(200, "text/plain", temp);
   // return true;
 
-  if (!LittleFS.exists("/fs.html")) server.send(200, "text/html", LittleFS.begin() ? HELPER : WARNING);     // ermöglicht das hochladen der fs.html
+  if (!LittleFS.exists("/fs.html")) server.send(200, "text/html", HELPER);     // ermöglicht das hochladen der fs.html
   if (path.endsWith("/")) path += "index.html";
   if (path == "/spiffs.html") sendResponce(); // Vorrübergehend für den Admin Tab
   return LittleFS.exists(path) ? ({File f = LittleFS.open(path, "r"); server.streamFile(f, getContentType(path)); f.close(); true;}) : false;
@@ -189,7 +189,11 @@ void formatFS() {                                                               
 }
 
 void setupFS() {                                                                       // Funktionsaufruf "setupFS();" muss im Setup eingebunden werden
-  LittleFS.begin();
+  if (!LittleFS.begin(true)) {  // true parameter formats the filesystem if mounting fails
+    Serial.println("LittleFS Mount Failed");
+    return;
+  }
+  Serial.println("LittleFS Mount Successful");
   server.on("/format", formatFS);
   server.on("/upload", HTTP_POST, sendResponce, handleUpload);
   server.onNotFound([]() {
